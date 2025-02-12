@@ -3,12 +3,12 @@
 ## Base URL
 
 ```
-http://<your-server-url>:<PORT>
+http://your-server-url/
 ```
 
 ## Endpoints
 
-### 1. Generate Images
+### 1. Generate Food Images
 
 **Endpoint:**
 
@@ -17,7 +17,7 @@ POST /generate-images
 ```
 
 **Description:**
-Fetches images of foods and returns them as base64-encoded strings.
+Generates base64-encoded images of food items using Google Image Search.
 
 **Request Body (JSON):**
 
@@ -32,14 +32,14 @@ Fetches images of foods and returns them as base64-encoded strings.
 
 ```json
 {
-  "1": "data:image/jpeg;base64,/9j/...",
-  "2": "data:image/jpeg;base64,/9j/..."
+  "1": "data:image/jpeg;base64,...",
+  "2": "data:image/jpeg;base64,..."
 }
 ```
 
 ---
 
-### 2. Detect Foods
+### 2. Detect Foods in an Image
 
 **Endpoint:**
 
@@ -48,16 +48,19 @@ POST /detect-foods
 ```
 
 **Description:**
-Detects food items present in an image.
+Detects food items in an image provided by the user.
 
 **Request Body (JSON):**
 
 ```json
 {
-  "imageUrl": "https://example.com/food.jpg",
+  "imageUrl": "https://example.com/image.jpg",
+  "imageBase64": "data:image/jpeg;base64,...",
   "menu": "Pizza, Burger, Salad"
 }
 ```
+
+**Note:** The user can provide either `imageUrl` or `imageBase64`, but at least one must be included.
 
 **Response (JSON):**
 
@@ -78,13 +81,13 @@ POST /meal-recommender
 ```
 
 **Description:**
-Generates a meal plan based on user context.
+Generates a meal plan based on user-provided context.
 
 **Request Body (JSON):**
 
 ```json
 {
-  "context": "A vegetarian looking for a high-protein diet."
+  "context": "A 30-year-old vegetarian looking for healthy meal options."
 }
 ```
 
@@ -92,13 +95,13 @@ Generates a meal plan based on user context.
 
 ```json
 {
-  "plan": "Your meal plan includes lentil soup, grilled tofu, and quinoa salad."
+  "plan": "Breakfast: Oatmeal with fruits, Lunch: Grilled vegetable salad, Dinner: Lentil soup."
 }
 ```
 
 ---
 
-### 4. Get Description
+### 4. Get Food Description
 
 **Endpoint:**
 
@@ -107,13 +110,13 @@ POST /get-description
 ```
 
 **Description:**
-Generates a short description of a dish based on its name and ingredients.
+Generates a short description of a dish based on its ingredients and name.
 
 **Request Body (JSON):**
 
 ```json
 {
-  "context": "Spaghetti Carbonara with eggs, pancetta, and Parmesan cheese."
+  "context": "Pasta with tomato sauce and basil"
 }
 ```
 
@@ -121,7 +124,7 @@ Generates a short description of a dish based on its name and ingredients.
 
 ```json
 {
-  "plan": "A classic Italian pasta dish with a creamy, savory sauce."
+  "plan": "A classic Italian dish with rich tomato sauce and fresh basil."
 }
 ```
 
@@ -129,7 +132,7 @@ Generates a short description of a dish based on its name and ingredients.
 
 ## Error Handling
 
-If an error occurs, the API returns a 400 or 500 response:
+All endpoints return an error response in case of failure:
 
 ```json
 {
@@ -137,4 +140,4 @@ If an error occurs, the API returns a 400 or 500 response:
 }
 ```
 
-Ensure that all required fields are included in the request body.
+---
